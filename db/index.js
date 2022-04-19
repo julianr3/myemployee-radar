@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const cTable = require('console.table');
 
 const promptMain = () => {
     return inquirer.prompt([
@@ -13,22 +14,22 @@ const promptMain = () => {
     .then(userChoice => {
         switch (userChoice.main) {
             case "view all departments":
-                viewDepartments();
+                console.table(department);
                 
                 break;
 
             case "view all roles":
-                viewRoles();
+                console.table(roles)
                     
                 break;
 
             case "view all employees":
-                viewEmployees();
+                console.table(employee);
                     
                 break;
 
             case "add a department":
-                viewDepartments();
+                newDept();
                     
                 break;
 
@@ -54,4 +55,22 @@ const promptMain = () => {
     })
 }
 
-// view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
+promptMain()
+
+// add department
+const newDept = () => {
+    return inquirer.prompt([
+        
+        {
+            type: 'input',
+            name: 'deptName',
+            message: "What is the name of the department?",
+        },
+       
+    ]).then(answers => {
+        console.log(answers);
+        // const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNum);
+        // teamMembers.push(manager);
+        promptMain();
+    })
+}
