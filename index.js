@@ -36,7 +36,7 @@ const promptMain = () => {
                     break;
 
                 case "view all employees":
-                    connection.promise().query('SELECT employee.id, employee.first_name, employee.last_name, roles.titles FROM employee JOIN roles ON employee.roles_id=roles.id')
+                    connection.promise().query('SELECT employee.id, employee.first_name, employee.last_name, roles.titles, department.name AS department, roles.salary, employee.manager_id FROM employee JOIN roles ON employee.roles_id=roles.id JOIN department ON roles.department_id = department.id')
                         .then(([allEmployees]) => {
                             console.table(allEmployees);
                             promptMain()
