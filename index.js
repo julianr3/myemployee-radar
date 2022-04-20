@@ -118,13 +118,13 @@ const newRole = () => {
 
     ]).then(answers => {
         console.log((answers.roleName) + ' has been added to the database successfully!');
-        connection.promise().query(`INSERT INTO roles (titles, salary, name) VALUES ("${answers.roleName}", "${answers.roleSalary}", "${answers.roleDept}")`)
-        .then(() => {
-            // console.table(allRoles);
-            console.log("Role added!")
-            promptMain()
+        // connection.promise().query(`INSERT INTO roles (titles, salary, name) VALUES ("${answers.roleName}", "${answers.roleSalary}", "${answers.roleDept}")`)
+        // .then(() => {
+        //     // console.table(allRoles);
+        //     console.log("Role added!")
+        //     promptMain()
 
-        })
+        // })
     })
 }
 
