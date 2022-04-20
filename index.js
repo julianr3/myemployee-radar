@@ -7,7 +7,7 @@ const promptMain = () => {
             type: 'list',
             name: 'main',
             message: "What would you like to do?",
-            choices: ["view all departments", "view all roles", "view all employees", "add a department", "add a role", "add an employee", "update employee role"],
+            choices: ["view all departments", "view all roles", "view all employees", "add a department", "add a role", "add an employee", "delete department"],
         },
 
     ])
@@ -59,8 +59,8 @@ const promptMain = () => {
 
                     break;
 
-                case "update employee role":
-                    updateEmployee();
+                case "delete department":
+                   deleteDept();
 
                     break;
 
@@ -97,7 +97,7 @@ const newDept = () => {
 }
 // add a role
 const newRole = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
 
         {
             type: 'input',
@@ -111,14 +111,20 @@ const newRole = () => {
         },
         {
             type: 'list',
-            name: 'roleName',
+            name: 'roleDept',
             message: "Which department does the role belong to?",
             choices: ['Sales', 'Engineering', 'Finance', 'Legal']
         },
 
     ]).then(answers => {
         console.log((answers.roleName) + ' has been added to the database successfully!');
-        promptMain();
+        connection.promise().query(`INSERT INTO roles (titles, salary, name) VALUES ("${answers.roleName}", "${answers.roleSalary}", "${answers.roleDept}")`)
+        .then(() => {
+            // console.table(allRoles);
+            console.log("Role added!")
+            promptMain()
+
+        })
     })
 }
 
@@ -152,4 +158,25 @@ const addEmployee = () => {
     })
 }
 
-promptMain()
+const deleteDept = () => {
+    inquirer.prompt([
+
+        {
+            type: 'input',
+            name: 'deptDel',
+            message: "What is the name of the department?",
+        },
+
+    ]).then(answers => {
+
+        connection.promise().query(`DELETE FROM department WHERE name="${answers.deptDel}"`)
+                    .then(() => {
+                        // console.table(allRoles);
+                        console.log("Department added!")
+                        promptMain()
+
+                    })
+    })
+}
+
+promptMain();
